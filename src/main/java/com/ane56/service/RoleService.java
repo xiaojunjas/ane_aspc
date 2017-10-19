@@ -2,11 +2,15 @@ package com.ane56.service;
 
 import java.util.List;
 
+import com.ane56.domain.Role;
+
+import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.PATCH;
+import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
-
-import com.ane56.domain.Role;
 
 public interface RoleService {
 
@@ -19,7 +23,7 @@ public interface RoleService {
 	@GET("/v1/roles/count")
 	public Integer countRoles(@Query("query") String query);
 
-	/*@POST("/v1/roles")
+	@POST("/v1/roles")
 	public Long saveRole(@Body Role role);
 
 	@PUT("/v1/roles")
@@ -28,7 +32,7 @@ public interface RoleService {
 	@PATCH("/v1/roles")
 	public Integer updateRoleSelected(@Body Role role);
 
-	@DELETE("/v1/roles")
+	/*@DELETE("/v1/roles")
 	public Integer deleteRole(@Query("id") Long id);
 	
 	@POST("/v1/userRoles/batch")

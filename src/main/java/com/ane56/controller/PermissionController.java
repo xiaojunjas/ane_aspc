@@ -18,7 +18,6 @@ import com.ane56.domain.RolePermission;
 import com.ane56.domain.TreeNode;
 import com.ane56.service.PermissionService;
 import com.ane56.service.RolePermissionService;
-import com.ane56.service.UserService;
 import com.ane56.uitls.HttpResults;
 import com.ane56.uitls.UserUtil;
 import com.google.common.collect.Lists;
@@ -30,8 +29,8 @@ public class PermissionController {
 	
 	/*@Autowired
 	private RoleService roleService;*/
-	@Autowired
-	private UserService userService;
+	/*@Autowired
+	private UserService userService;*/
 	/*@Autowired
 	private SchoolService schoolService;
 	@Autowired

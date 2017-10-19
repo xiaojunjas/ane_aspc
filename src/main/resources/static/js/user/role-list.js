@@ -85,7 +85,7 @@ $(function () {
     
     
     /* 删除*/
-    $("#userList").on("click", ".to-deleted", function() {
+   /* $("#userList").on("click", ".to-deleted", function() {
     	var userId = $(this).attr("userId");
     	layer.confirm('你正在删除用户信息，是否继续',function(){
         	$.ajax({
@@ -104,11 +104,89 @@ $(function () {
             //这里是取消的回掉函数
         }
       );
-   });
+   });*/
     
     /* 删除*/
    /* $("#userList").on("click", ".to-edit", function() {
     	 window.location.href="/aspc/user-edit?userId="+$(this).attr("userId");
     });*/
+    
+    //添加角色
+    $('.j-role-add').on('click',function () {
+        $('#role-id').val('');
+        $('#input-name').val('');
+        $('#Modal-role-add').find('.modal-title').text('添加角色');
+        $('#Modal-role-add').modal('show');
+    })
+    
+    // 确定
+    $('#do_save_userroles').on("click",function () {
+        saveing(function(data){ 
+        	alertLayerMessage("保存成功！");
+        	$('#Modal-role-add').modal('hide');
+        	userList();
+        });
+    });
+    
+    //编辑角色
+    $('#userList').on('click','.to-edit',function () {
+    	var id_ = $(this).attr("roleId");
+    	geting(id_,function(data){
+    		console.info(data);
+    		$('#role-id').val(id_);
+            $('#input-name').val(data.attrs.role.name);
+            $('#Modal-role-add').find('.modal-title').text('编辑角色');
+            $('#Modal-role-add').modal('show');
+    	});
+        
+    })
 
 });
+
+
+//添加、修改请求
+function saveing(callback){
+	var saveParams = saveParamsing();
+	$.ajax({
+		type:"POST",
+		url: "/aspc/roles",
+		dataType: "json",
+		data:saveParams,
+		success: function(data){
+			if(data.status==10000)
+				(typeof callback == 'function')?callback():$.dialog({'title': '提示:','content': '操作成功！'});
+			else if(data.message) 
+				alertLayerMessage(data.message);
+			else alertLayerMessage("操作成功");;
+		},error:function(){
+			alertLayerMessage("操作异常");
+		}
+	});
+}
+
+//添加、修改参数
+function saveParamsing(){
+	var roleid = $('#role-id').val();
+	var name = $('#input-name').val();
+	var type = $("#input-type").val();
+	var saveParams={'id':roleid,'name':name,'type':type};
+	return saveParams;
+}
+
+//获取单个信息
+function geting(id_,callback){
+	if(!id_){
+		layer.alert("请求异常！", {title: "请求错误，缺少参数"});
+		return false;
+	}
+	$.ajax({
+		type:"GET",
+		url: "/aspc/roles"+'/'+id_,
+		dataType: "json",
+		success: function(data){
+			if(typeof callback == 'function') callback(data);
+		},error:function(){
+			layer.alert("请求异常！", {title: "请求异常"});
+		}
+	});
+}

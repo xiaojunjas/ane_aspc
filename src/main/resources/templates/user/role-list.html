@@ -17,11 +17,11 @@
                         <div class="box">
                             <div class="box-header">
                                  <div class="navbar">
-                                    <!-- <ul class="nav navbar-nav">
-                                        <li class="pull-left j-parent-add">
-                                            <a class="" href="javascript:void(0);">添加多文件上传</a>
+                                    <ul class="nav navbar-nav">
+                                        <li class="pull-left j-role-add">
+                                            <a class="" href="javascript:void(0);">添加角色</a>
                                         </li> 
-                                    </ul> -->
+                                    </ul>
                                 </div>
                                 <div class="row">
                                     <form class="col-xs-3 pull-right">
@@ -58,27 +58,42 @@
             </section>
         </div>
         
-        <!-- 权限模态框 -->
-       <!--  <div class="modal fade" id="Modal-perms-set" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		    <div class="modal-dialog">
-		        <div class="modal-content">
-		            <div class="modal-header">
-		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		                <h4 class="modal-title">用户权限设置</h4>
-		            </div>
-		            <div class="modal-body col-xs-12">
-		                <div class="form-horizontal">
-		                     <div id="treeview2" class="treeview"></div>
-		                </div>
-		            </div>
-		            <div class="modal-footer">
-		            	<input type="hidden" id="user-id" />
-		                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
-		                <button type="button" class="btn btn-primary j-confirm-btn modify-org" id="do-save">确定</button>
-		            </div>
-		        </div>
-		    </div>
-		</div> -->
+        
+        <!-- 添加角色 -->
+        <div class="modal fade" id="Modal-role-add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">添加角色</h4>
+                </div>
+                <div class="modal-body col-xs-12">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="input-id" class="col-sm-2 control-label">类型</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="input-type">
+                                	<option value="1">管理员</option>
+                                	<option value="2">普通用户</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-name" class="col-sm-2 control-label"><span class="my-red">*</span>名称</label>
+                            <div class="col-sm-10" form-prompt="true" form-prompt-text="名称为1~20位">
+                            	<input type="hidden" id="role-id"  value=""/>
+                                <input type="text" class="form-control" id="input-name" placeholder="名称为1~20位" value="" maxlength="20"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+                    <button type="button" id="do_save_userroles" class="btn btn-primary j-confirm-btn">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
         
 
 <script th:src="@{/js/plug-in/jstree/js/jstree.min.js}"></script>
@@ -91,9 +106,9 @@
 		<td>{{= item.type}}</td>
    	    <td>{{= item.remark}}</td>
 		<td>
-			<button type="button" userId="{{= item.id}}" class="btn btn-success btn-xs j-jur to-edit">修改</button>
-			<button type="button" userId="{{= item.id}}" class="btn btn-success btn-xs j-jur to-deleted">删除</button>
-			<button type="button" userId="{{= item.id}}" class="btn btn-success btn-xs j-jur to-permission">用户</button>
+			<button type="button" roleId="{{= item.id}}" class="btn btn-success btn-xs j-jur to-edit">修改</button>
+			<button type="button" roleId="{{= item.id}}" class="btn btn-success btn-xs j-jur to-deleted">删除</button>
+			<button type="button" roleId="{{= item.id}}" class="btn btn-success btn-xs j-jur to-permission">用户</button>
 		</td>
     </tr>
 {{/each}}
