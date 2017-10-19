@@ -1,0 +1,100 @@
+<link rel="stylesheet" th:href="@{/js/plug-in/jstree/css/style.min.css}" />
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>角色列表列表</h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="/panel"><i class="fa fa-dashboard"></i>首页</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/role}">角色列表</a>
+                    </li>
+                </ol>
+            </section>
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                 <div class="navbar">
+                                    <!-- <ul class="nav navbar-nav">
+                                        <li class="pull-left j-parent-add">
+                                            <a class="" href="javascript:void(0);">添加多文件上传</a>
+                                        </li> 
+                                    </ul> -->
+                                </div>
+                                <div class="row">
+                                    <form class="col-xs-3 pull-right">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="query" placeholder="输入姓名" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-info" type="button" id="but_query">搜索</button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="box-body">
+		                        <div class="col-xs-12">
+		                            <table class="table table-bordered table-hover table-condensed table-striped text-center" id="j-table-1">
+		                                <thead>
+			                                <tr>
+			                                    <th>名称</th>
+			                                    <th>类型</th>
+			                                    <th>remake</th>
+			                                    <th>操作</th>
+			                                </tr>
+		                                </thead>
+		                                <tbody id="userList"></tbody>
+		                            </table>
+		                            <section class="page pull-right">
+										<ul class="pagination" id="pagination"></ul>
+		                        	</section>
+		                        </div>
+		                    </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- 权限模态框 -->
+       <!--  <div class="modal fade" id="Modal-perms-set" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		                <h4 class="modal-title">用户权限设置</h4>
+		            </div>
+		            <div class="modal-body col-xs-12">
+		                <div class="form-horizontal">
+		                     <div id="treeview2" class="treeview"></div>
+		                </div>
+		            </div>
+		            <div class="modal-footer">
+		            	<input type="hidden" id="user-id" />
+		                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+		                <button type="button" class="btn btn-primary j-confirm-btn modify-org" id="do-save">确定</button>
+		            </div>
+		        </div>
+		    </div>
+		</div> -->
+        
+
+<script th:src="@{/js/plug-in/jstree/js/jstree.min.js}"></script>
+<script th:src="@{/js/user/role-list.js}"></script>
+
+<script id="userTempl" type="text/x-jquery-tmpl">
+{{each(i,item) list}}
+	<tr>
+      	<td>{{= item.name}}</td>
+		<td>{{= item.type}}</td>
+   	    <td>{{= item.remark}}</td>
+		<td>
+			<button type="button" userId="{{= item.id}}" class="btn btn-success btn-xs j-jur to-edit">修改</button>
+			<button type="button" userId="{{= item.id}}" class="btn btn-success btn-xs j-jur to-deleted">删除</button>
+			<button type="button" userId="{{= item.id}}" class="btn btn-success btn-xs j-jur to-permission">用户</button>
+		</td>
+    </tr>
+{{/each}}
+</script>

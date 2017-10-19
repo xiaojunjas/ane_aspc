@@ -1,0 +1,41 @@
+<aside class="main-sidebar">
+	<input type="hidden" th:value="${user.account}" id="account"/>
+    <section class="sidebar">
+        <ul class="sidebar-menu" id="sidebar-menu">
+            <li class="header">主导航</li>
+            <li class="">
+                <a href="/panel">
+                    <i class="fa fa-home"></i>
+                    <span>首页</span>
+                </a>
+            </li>
+            <li class="">
+                <a th:href="@{/user}">
+                    <i class="fa fa-cog"></i>
+                    <span>用户信息</span>
+                </a>
+                 <ul class="treeview-menu">
+                    <li>
+                        <a th:href="@{/user}"><i class="fa fa-circle-o"></i>用户信息</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/role}"><i class="fa fa-circle-o"></i>角色信息</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="fa fa-cog"></i>
+                    <span>影院信息</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="fa fa-cog"></i>
+                    <span>售票信息</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+</aside>
+<script th:src="@{/js/public/left.js}"></script>

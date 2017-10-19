@@ -1,0 +1,40 @@
+multipart:
+    max-file-size: 5120Mb
+    max-request-size: 5120Mb
+
+server:
+    port: 1001
+    context-path: /aspc
+
+spring:
+    thymeleaf:
+        cache: false
+        cache-period: 0
+    template:
+        cache: false
+    mvc:
+        favicon:
+            enabled: false
+
+#monitor           
+management:
+    port: 8092
+    security:
+        enabled: false
+
+logging:
+    level:
+        root: INFO
+    file: logs/ane_aspc.log
+
+user-url: http://127.0.0.1:1002
+
+#cas configurations
+cas-server: http://127.0.0.1:8080/cas
+cas-service: http://127.0.0.1:1001/aspc/login/cas
+cas-login: http://127.0.0.1:8080/cas/login
+cas-logout: http://127.0.0.1:8080/cas/logout?service=http://127.0.0.1:1001/aspc/user
+
+#layout
+layout: content
+full-layout: full-layout

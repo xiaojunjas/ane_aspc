@@ -1,0 +1,89 @@
+<link rel="stylesheet" th:href="@{/js/plug-in/my-form-prompt/css/form-prompt.css}" />
+         <div class="content-wrapper">
+            <section class="content-header">
+                <h1>添加用户信息</h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="index.html"><i class="fa fa-dashboard"></i>首页</a>
+                    </li>
+                    <li>
+                        <a href="parent.html">用户信息</a>
+                    </li>
+                    <li>
+                        <a href="parent-add.html">用户信息</a>
+                    </li>
+                </ol>
+            </section>
+            <section class="content">
+            <input type="hidden" th:value="${userId}" id="userId"/>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box box-info">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">填写用户信息</h3>
+                                </div>
+                                <form class="form-horizontal" id="" action="#">
+                                    <div class="form-group">
+                                        <label for="input-photo" class="my-photo">
+                                            <img class="profile-user-img img-responsive img-circle j-photo" th:src="@{/images/public/user_ui_01.png}" />
+                                            <input type="file" id="input-photo" style="display: none;" />
+                                        </label>
+                                    </div>
+                                    <div class="box-body col-xs-12">
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <label for="input-name" class="col-sm-3 control-label">姓名</label>
+                                                <div class="col-sm-9" form-prompt="false" form-prompt-text="姓名输入错误">
+                                                    <input type="text" class="form-control" id="input-name" placeholder="姓名不能为空" value=""  />
+                                                </div>
+                                            </div>
+                                           <div class="form-group" id="wrap">
+                                                <label class="col-sm-3 control-label">性别</label>
+                                                <div class="col-sm-9">
+                                                    <label class="my-form-radio">男<input type="radio" name="sex" checked="checked" id="input-sex-1" value="男"/></label>
+                                                    <label class="my-form-radio">女<input type="radio" name="sex" id="input-sex-2" value="女"/></label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="input-birthday" class="col-sm-3 control-label">密码</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" id="input-password" value="" />
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                        <div class="col-xs-6">
+                                             <div class="form-group">
+                                                <label for="input-tel" class="col-sm-3 control-label">手机</label>
+                                                <div class="col-sm-9" form-prompt="false" form-prompt-text="手机格式错误">
+                                                    <input type="tel" class="form-control" id="input-phone" value="" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="input-email" class="col-sm-3 control-label">邮箱</label>
+                                                <div class="col-sm-9" form-prompt="false" form-prompt-text="邮箱格式错误">
+                                                    <input type="email" class="form-control" id="input-email" value=""  />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="input-site" class="col-sm-3 control-label">居住地</label>
+                                                <div class="col-sm-9" form-prompt="false" form-prompt-text="居住地格式错误">
+                                                    <input type="text" class="form-control" id="input-address" value=""  />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <button type="button" class="btn btn-default j-btn-cancel">取消</button>
+                                        <button type="button" class="btn btn-info pull-right j-submit">保存</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+<script th:src="@{/js/user/user-edit.js}"></script>
+<script th:src="@{/js/plug-in/my-form-prompt/js/form-prompt.js}" ></script>

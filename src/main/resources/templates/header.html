@@ -1,0 +1,36 @@
+<header class="main-header">
+    <a href="javascript:;" class="logo">
+        <span class="logo-mini">你微笑时好美</span>
+        <span class="logo-lg"><b>你微笑时好美</b></span>
+    </a>
+    <!-- <input type="hidden" th:value="${user.account}" id="account"/> -->
+    <nav class="navbar navbar-static-top">
+        <a href="javascript:;" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">切换导航</span>
+        </a>
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <li class="dropdown user user-menu">
+                   <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                         <img class="user-image" onerror="javascript:this.src='/cloud/images/public/default-avatar.png';"/>
+                        <span class="hidden-xs user" id="1" text="肖军"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                         <li class="user-header">
+                           <!--  <img th:src="@{/files/images/} + ${user.avatar}" class="img-circle" onerror="javascript:this.src='/management/images/public/default-avatar.png';"/>
+                            <p th:text="${user.name}"></p> -->
+                        </li>
+                        <li class="user-footer">
+                            <!-- <div class="pull-left">
+                                <a href="javascript:;" class="btn btn-default btn-flat">设置</a>
+                            </div> -->
+                            <div class="pull-right">
+                                <a th:href="@{/logout}" class="btn btn-default btn-flat">退出</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
