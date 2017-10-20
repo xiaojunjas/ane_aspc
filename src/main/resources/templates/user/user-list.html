@@ -1,13 +1,13 @@
 <link rel="stylesheet" th:href="@{/js/plug-in/jstree/css/style.min.css}" />
         <div class="content-wrapper">
             <section class="content-header">
-                <h1>用户列表</h1>
+                <h1>用户信息</h1>
                 <ol class="breadcrumb">
                     <li>
                         <a href="/panel"><i class="fa fa-dashboard"></i>首页</a>
                     </li>
                     <li>
-                        <a th:href="@{/user}">用户列表</a>
+                        <a th:href="@{/user}">用户信息</a>
                     </li>
                 </ol>
             </section>
@@ -39,8 +39,7 @@
 		                            <table class="table table-bordered table-hover table-condensed table-striped text-center" id="j-table-1">
 		                                <thead>
 			                                <tr>
-			                                    <th>名称</th>
-			                                    <th>密码</th>
+			                                    <th>登录名</th>
 			                                    <th>性别</th>
 			                                    <th>邮箱</th>
 			                                    <th>手机</th>
@@ -86,13 +85,11 @@
 
 <script th:src="@{/js/plug-in/jstree/js/jstree.min.js}"></script>
 <script th:src="@{/js/user/user-list.js}"></script>
-<script th:src="@{/js/public/loading.js}"></script>
 
 <script id="userTempl" type="text/x-jquery-tmpl">
 {{each(i,item) list}}
 	<tr>
       	<td>{{= item.account}}</td>
-		<td>{{= item.password}}</td>
 		<td>{{= item.sex}}</td>
 		<td>{{= item.email}}</td>
 		<td>{{= item.phone}}</td>

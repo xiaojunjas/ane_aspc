@@ -4,21 +4,21 @@ $(function () {
     var limit = 10;
     
 	var params={'start':0,'limit':limit,'query':null};
-	userList();
+	roleList();
 	
 	/* 搜索框条件查询 回车*/
 	$("#query").keydown(function(event) {  
 		if(event.keyCode == 13){
 			event.preventDefault();
 			current=1;
-			userList();
+			roleList();
 	    }
 	});
 	 
 	/* 搜索框条件查询 点击按钮*/
 	$("#but_query").click(function(){
 			current=1;
-			userList();
+			roleList();
 	});
 	
 	/* 参数*/
@@ -30,15 +30,15 @@ $(function () {
     }
         
     /* 方法*/
-    function userList(){
+    function roleList(){
     	paramsing();
-    	$("#userList").empty();
+    	$("#roleList").empty();
     	$.ajax({
     		type:"get",
     		url:"/aspc/roles",
     		data:params,
     		success : function(data){
-    			$("#userTempl").tmpl(data).appendTo("#userList");
+    			$("#roleTempl").tmpl(data).appendTo("#roleList");
     			pageing(data.count);
     		},error:function(data){
     			layer.alert("出现错误信息!");
@@ -83,38 +83,27 @@ $(function () {
 		}
     };
     
+    /* 用户列表*/
+    $("#roleList").on("click", ".to-user", function() {
+		$("#j-table-2").find(".j-checked").removeClass("j-checked");
+        confirmUserStyle(".j-che-2",".j-btn-2");
+		$("#role-user").modal("show");
+		pageNum = 1;
+		roleUserList($(this).attr("roleId"));//对比存在用户
+		$("#thisRoleId").attr("thisRoleId",$(this).attr("roleId"));
+		userList();//用户列表
+    });
     
-    /* 删除*/
-   /* $("#userList").on("click", ".to-deleted", function() {
-    	var userId = $(this).attr("userId");
-    	layer.confirm('你正在删除用户信息，是否继续',function(){
-        	$.ajax({
-        		type:"get",
-        		url:"/aspc/delUserByUserId",
-        		data:{
-        			userId:userId
-        		},
-        		success : function(data){
-        			userList();
-        		},error:function(data){
-        			layer.alert("出现错误信息!");
-        		}
-        	});
-        },function(){
-            //这里是取消的回掉函数
-        }
-      );
-   });*/
-    
-    /* 删除*/
-   /* $("#userList").on("click", ".to-edit", function() {
-    	 window.location.href="/aspc/user-edit?userId="+$(this).attr("userId");
-    });*/
+   //样式切换
+    $("#userList").on("click", ".j-btn-2", function() {
+    	 confirmUserStyle(".j-che-2",".j-btn-2");
+	});
     
     //添加角色
     $('.j-role-add').on('click',function () {
+    	$("#role-type").show();
         $('#role-id').val('');
-        $('#input-name').val('');
+        $('#input-remake').val('');
         $('#Modal-role-add').find('.modal-title').text('添加角色');
         $('#Modal-role-add').modal('show');
     })
@@ -129,17 +118,61 @@ $(function () {
     });
     
     //编辑角色
-    $('#userList').on('click','.to-edit',function () {
+    $('#roleList').on('click','.to-edit',function () {
+    	$("#role-type").hide();
     	var id_ = $(this).attr("roleId");
     	geting(id_,function(data){
-    		console.info(data);
     		$('#role-id').val(id_);
-            $('#input-name').val(data.attrs.role.name);
+            $('#input-remake').val(data.attrs.role.name);
             $('#Modal-role-add').find('.modal-title').text('编辑角色');
             $('#Modal-role-add').modal('show');
     	});
-        
     })
+    
+    //保存 or 移除
+    $("#role-user-add").click(function(){
+    	var userIds1 = new Array();//页面一共选择多少教师
+    	var userIds2 = new Array();//已存在组织教师
+    	for(var i=0;i<$("#userList").find(".j-checked").length;i++){
+    		userIds1.push($("#userList").find(".j-checked").eq(i).attr("user-id"));
+    		userIds2.push($("#userList").find(".old_id").eq(i).attr("user-id")); 
+		}
+    	
+    	 delteaIds = new Array();//删除
+     	$("#userList .old_id").each(function(k,v){
+     		if($(v).attr("class").indexOf("j-checked")==-1){
+     			delteaIds.push($(v).attr("user-id"));
+     		}
+     	});
+     	
+    	//临时数组存放 --去除重复
+    	var tempArray1 = [];//临时数组1
+    	var tempArray2 = [];//临时数组2
+
+    	for(var i=0;i<userIds2.length;i++){
+    	    tempArray1[userIds2[i]]=true;//将数array2 中的元素值作为tempArray1 中的键，值为true；
+    	}
+    	for(var i=0;i<userIds1.length;i++){
+    	    if(!tempArray1[userIds1[i]]){
+    	        tempArray2.push(userIds1[i]);//过滤array1 中与array2 相同的元素；
+    	    }
+    	}
+//    	console.log(tempArray2)
+//    	console.log(delteaIds)
+		$.ajax({
+			type: "POST",
+			url: "/aspc/roleUser",
+			data: {
+				userIds: tempArray2,
+				delteaIds:delteaIds,
+				roleId: $("#thisRoleId").attr("thisRoleId")
+			},
+			success: function(teachers){
+				$("#role-user").modal("hide");
+				roleList();
+			}
+		})
+    });
 
 });
 
@@ -167,9 +200,15 @@ function saveing(callback){
 //添加、修改参数
 function saveParamsing(){
 	var roleid = $('#role-id').val();
-	var name = $('#input-name').val();
+	var remark = $('#input-remake').val();
 	var type = $("#input-type").val();
-	var saveParams={'id':roleid,'name':name,'type':type};
+	var name ="";
+	if(type==1){
+		name = "管理员";
+	}else{
+		name = "一般用户";
+	}
+	var saveParams={'id':roleid,'name':name,'type':type,'remark':remark};
 	return saveParams;
 }
 
@@ -189,4 +228,109 @@ function geting(id_,callback){
 			layer.alert("请求异常！", {title: "请求异常"});
 		}
 	});
+}
+
+//组织存在教师
+function roleUserList(roleId){
+	$.ajax({
+		type: "GET",
+		url: "/aspc/findRoleUserByRoleId",
+		data: {
+			roleId: roleId
+		},
+		success: function(date){
+			var userIds="";
+	            for(var i=0;i<date.length;i++){
+	            	userIds +=","+date[i].userId;
+	            }
+	            $("#exist-userId").attr("userIds",userIds);
+		}
+	})
+}
+
+
+/**
+ * 模态框 - 用户列表
+ */
+var start=1;
+var limitu = 10;
+var paramsu={'start':0,'limit':limitu,'query':null};
+function userParamsing(){
+	var query = $("#query").val();
+	paramsu['start']=start-1;
+	paramsu['limit']=limitu;
+	paramsu['query']=query
+}
+function userList(){
+	userParamsing();
+	$.ajax({
+		type: "GET",
+		url: "/aspc/listUser",
+		data:paramsu,
+		success: function(data){
+			
+			$("#userList").empty();
+			$("#userTmpl").tmpl(data).appendTo("#userList");
+			
+			var roleIdStr = $("#exist-userId").attr("userIds");
+			var roleIds = roleIdStr.split(",");
+			$("#userList tr").each(function(k,v){
+				var selectedTeaId = $(v).attr("user-id");
+				var exist = $.inArray(selectedTeaId, roleIds);
+				if(exist!=-1){
+					$(v).addClass("j-checked old_id");//old_id 区分教师
+					$(v).find(".j-btn-2").removeClass("btn-info").addClass("btn-primary").text("已选");
+				}
+			});
+			
+			pagination(data.totalPages);
+			opt.cusCheckbox(".j-che-2",".j-btn-2"); //声明用户多选'
+		}
+	})
+}
+
+/**
+ * 分页事件
+ */
+function pagination(totalPages){
+	if(totalPages > 1) {
+		$("#teacherPage").show();
+		$("#teacherPage").bootstrapPaginator({
+    		bootstrapMajorVersion: 3.0,
+    		currentPage: pageNum,
+    		totalPages: totalPages,
+    		numberOfPages: 10,
+    		itemTexts: function (type, page, currentpage) {
+                switch (type) {
+    	            case "first": return "首页";
+    	            case "prev" : return "上一页";
+    	            case "next" : return "下一页";
+    	            case "last" : return "尾页";
+    	            case "page" : return page;
+                }
+            },
+            onPageClicked: function(event, originalEvent, type, start){
+    			if(pageNum == start){
+    				return false;
+    			}
+    			pageNum = start;
+    			userList();
+    		}
+    	});
+	}else{
+		$("#teacherPage").hide();
+	}
+}
+
+
+
+//选择用户样式重置
+function confirmUserStyle(list,listbtn) {
+    for(var i = 0; i < $(list).length;i++){
+        if($(list).eq(i).attr("class").indexOf("j-checked") != -1){
+            $(list).eq(i).find(listbtn).removeClass("btn-info").addClass("btn-primary").text("已选");
+        }else{
+            $(list).eq(i).find(listbtn).removeClass("btn-primary").addClass("btn-info").text("可选");
+        }
+    }
 }
