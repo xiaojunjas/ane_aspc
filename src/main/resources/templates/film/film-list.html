@@ -1,0 +1,80 @@
+<link rel="stylesheet" th:href="@{/js/plug-in/jstree/css/style.min.css}" />
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>电影信息</h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="/panel"><i class="fa fa-dashboard"></i>首页</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/role}">电影信息</a>
+                    </li>
+                </ol>
+            </section>
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                 <div class="navbar">
+                                    <ul class="nav navbar-nav">
+                                        <li class="pull-left j-film-add">
+                                            <a class="" href="javascript:void(0);">添加电影</a>
+                                        </li> 
+                                    </ul>
+                                </div>
+                               <!--  <div class="row">
+                                    <form class="col-xs-3 pull-right">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="query" placeholder="输入姓名" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-info" type="button" id="but_query">搜索</button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div> -->
+                            </div>
+                            <div class="box-body">
+		                        <div class="col-xs-12">
+		                            <table class="table table-bordered table-hover table-condensed table-striped text-center" id="j-table-1">
+		                                <thead>
+			                                <tr>
+			                                    <th>名称</th>
+			                                    <th>导演</th>
+			                                    <th>主演</th>
+			                                    <th>上映时间</th>
+			                                    <th>评分</th>
+			                                    <th>操作</th>
+			                                </tr>
+		                                </thead>
+		                                <tbody id="filmList"></tbody>
+		                            </table>
+		                            <section class="page pull-right">
+										<ul class="pagination" id="pagination"></ul>
+		                        	</section>
+		                        </div>
+		                    </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+<script th:src="@{/js/film/film-list.js}"></script>
+
+<script id="filmTempl" type="text/x-jquery-tmpl">
+{{each(i,item) list}}
+	<tr>
+      	<td>{{= item.name}}</td>
+		<td>{{= item.director}}</td>
+   	    <td>{{= item.toStar}}</td>
+		<td>{{= item.releaseTime}}</td>
+		<td>{{= item.score}}</td>
+		<td>
+			<button type="button" filmId="{{= item.id}}" class="btn btn-success btn-xs j-jur j-film-edit">修改</button>
+			<button type="button" filmId="{{= item.id}}" class="btn btn-success btn-xs j-jur j-film-del">删除</button>
+		</td>
+    </tr>
+{{/each}}
+</script>
+ 

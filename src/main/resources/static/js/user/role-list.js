@@ -75,7 +75,7 @@ $(function () {
 	    				return false;
 	    			}
 	    			current = page;
-	    			userList();
+	    			roleList();
 	    		}
 	    	});
 		}else{
@@ -252,13 +252,13 @@ function roleUserList(roleId){
 /**
  * 模态框 - 用户列表
  */
-var start=1;
-var limitu = 10;
-var paramsu={'start':0,'limit':limitu,'query':null};
+var size1 = 10;
+var pageNum1 = 1;
+var paramsu={'start':0,'limit':size1,'query':null};
 function userParamsing(){
 	var query = $("#query").val();
-	paramsu['start']=start-1;
-	paramsu['limit']=limitu;
+	paramsu['start']=pageNum1-1;
+	paramsu['limit']=size1;
 	paramsu['query']=query
 }
 function userList(){
@@ -282,8 +282,7 @@ function userList(){
 					$(v).find(".j-btn-2").removeClass("btn-info").addClass("btn-primary").text("已选");
 				}
 			});
-			
-			pagination(data.totalPages);
+			pagination(data.count);
 			opt.cusCheckbox(".j-che-2",".j-btn-2"); //声明用户多选'
 		}
 	})
@@ -292,37 +291,40 @@ function userList(){
 /**
  * 分页事件
  */
-function pagination(totalPages){
-	if(totalPages > 1) {
-		$("#teacherPage").show();
-		$("#teacherPage").bootstrapPaginator({
+function pagination(count){
+	if(count<1) {
+		$("#userPage").empty();
+		return false;
+	}
+	var totalPage1 = parseInt(count/size1)+((count%size1)>0?1:0);
+	if(totalPage1>1){ 
+		$("#userPage").show();
+		$("#userPage").bootstrapPaginator({
     		bootstrapMajorVersion: 3.0,
-    		currentPage: pageNum,
-    		totalPages: totalPages,
+    		currentPage: pageNum1,
+    		totalPages: totalPage1,
     		numberOfPages: 10,
-    		itemTexts: function (type, page, currentpage) {
-                switch (type) {
+    		itemTexts: function (type1, page1, currentpage1) {
+                switch (type1) {
     	            case "first": return "首页";
     	            case "prev" : return "上一页";
     	            case "next" : return "下一页";
     	            case "last" : return "尾页";
-    	            case "page" : return page;
+    	            case "page" : return page1;
                 }
             },
-            onPageClicked: function(event, originalEvent, type, start){
-    			if(pageNum == start){
+            onPageClicked: function(event, originalEvent, type1, current1){
+    			if(pageNum1 == current1){
     				return false;
     			}
-    			pageNum = start;
+    			pageNum1 = current1;
     			userList();
     		}
     	});
 	}else{
-		$("#teacherPage").hide();
+		$("#userPage").hide();
 	}
 }
-
-
 
 //选择用户样式重置
 function confirmUserStyle(list,listbtn) {

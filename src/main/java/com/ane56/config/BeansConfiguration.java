@@ -22,6 +22,8 @@ import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 import retrofit.converter.JacksonConverter;
 
+import com.ane56.service.FilmService;
+import com.ane56.service.MoviesAddressService;
 import com.ane56.service.PermissionService;
 import com.ane56.service.RolePermissionService;
 import com.ane56.service.RoleService;
@@ -154,6 +156,16 @@ public class BeansConfiguration {
 	@Bean
 	public RoleService roleService() {
 		return commonService(commonConfig.getUserUrl(), RoleService.class);
+	}
+	
+	@Bean
+	public MoviesAddressService moviesAddressService() {
+		return commonService(commonConfig.getUserUrl(), MoviesAddressService.class);
+	}
+	
+	@Bean
+	public FilmService filmService() {
+		return commonService(commonConfig.getUserUrl(), FilmService.class);
 	}
 	
 }
