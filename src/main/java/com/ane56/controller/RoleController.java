@@ -1,16 +1,20 @@
 package com.ane56.controller;
 
-/*import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;*/
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ane56.domain.Role;
+import com.ane56.domain.RoleUser;
 import com.ane56.service.RoleService;
 import com.ane56.uitls.HttpResults;
 import com.ane56.uitls.PageList;
@@ -19,8 +23,6 @@ import com.ane56.uitls.PageParam;
 @Controller
 public class RoleController {
 
-	/*@Autowired
-	private UserService userService;*/
 	@Autowired
 	private RoleService roleService;
 	
@@ -41,11 +43,6 @@ public class RoleController {
 	@RequestMapping(value="/roles", method=RequestMethod.POST)
 	public @ResponseBody Object saveRole(Role role){
 		HttpResults result = new HttpResults();
-		Integer count = roleService.countRoles(role.getName());
-		if(count>0) {
-			result.init("10001","角色名称重复！");
-			return result;
-		}
 		if(null == role.getId()){
 			roleService.saveRole(role);
 		}else{
@@ -61,4 +58,44 @@ public class RoleController {
 		result.put("role", role);
 		return result;
     }
+	
+	@RequestMapping(value="/findRoleUserByRoleId", method=RequestMethod.GET)
+	public @ResponseBody List<RoleUser> findRoleUserByRoleId(Long roleId){
+		return roleService.findRoleUserByRoleId(null,roleId);
+    }
+	
+	@RequestMapping(value = "/roleUser", method = RequestMethod.POST)
+	public @ResponseBody Integer roleUser(@RequestParam(value = "userIds[]", required = false) Long[] userIds,
+			@RequestParam(value = "delteaIds[]", required = false) Long[] delteaIds, Long roleId) {
+		int count = 1;
+		List<RoleUser> roles = new ArrayList<RoleUser>();
+		if (userIds != null) {
+			for (Long userId : userIds) {
+				RoleUser role = new RoleUser();
+				role.setUserId(userId);
+				role.setRefId(roleId);
+				role.setType(1);
+				roles.add(role);
+			}
+		}
+		if (userIds == null && delteaIds == null) {
+			count = 0;// 没有进行操作直接返回
+		} else if (delteaIds == null) {
+			count = 1;
+			roleService.saveUserRoles(roles);
+		} else if (userIds == null) {
+			count = 1;
+			roleService.delRoleUserByUserId(delteaIds,roleId);
+		} else {
+			count = 1;
+			for (Long userId : userIds) {
+				List<RoleUser> a = roleService.findRoleUserByRoleId(roleId, userId);
+				if (a.size() ==0) {
+					roleService.saveUserRoles(roles);
+				}
+			}
+			roleService.delRoleUserByUserId(delteaIds,roleId);
+		}
+		return count;
+	}
 }

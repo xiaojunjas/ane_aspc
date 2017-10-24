@@ -1,0 +1,141 @@
+<link rel="stylesheet" th:href="@{/js/plug-in/jstree/css/style.min.css}" />
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>影院信息</h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="/panel"><i class="fa fa-dashboard"></i>首页</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/role}">影院信息</a>
+                    </li>
+                </ol>
+            </section>
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                 <div class="navbar">
+                                    <ul class="nav navbar-nav">
+                                        <li class="pull-left j-movies-add">
+                                            <a class="" href="javascript:void(0);">添加影院</a>
+                                        </li> 
+                                    </ul>
+                                </div>
+                               <!--  <div class="row">
+                                    <form class="col-xs-3 pull-right">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="query" placeholder="输入姓名" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-info" type="button" id="but_query">搜索</button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </div> -->
+                            </div>
+                            <div class="box-body">
+		                        <div class="col-xs-12">
+		                            <table class="table table-bordered table-hover table-condensed table-striped text-center" id="j-table-1">
+		                                <thead>
+			                                <tr>
+			                                    <th>名称</th>
+			                                    <th>地点</th>
+			                                    <th>remake</th>
+			                                    <th>操作</th>
+			                                </tr>
+		                                </thead>
+		                                <tbody id="moviesList"></tbody>
+		                            </table>
+		                            <section class="page pull-right">
+										<ul class="pagination" id="pagination"></ul>
+		                        	</section>
+		                        </div>
+		                    </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+   <!-- 电影信息模态框 -->
+	<div class="modal fade" id="film-movies" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">请选择电影</h4>
+				</div>
+				<div class="modal-body col-xs-12">
+					<div class="row">
+						<!-- <div class="box-header">
+							<div class="col-xs-5 pull-right">
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="编号或姓名" id="query" />
+									<span class="input-group-btn"><button class="btn btn-info" type="button" id="btn-query">查找</button></span>
+								</div>
+							</div>
+						</div> -->
+						<div class="box-body">
+							<input type="hidden" id="exist-filmId"/>
+							<input type="hidden" id="thisMoviesId"/>
+							<div class="col-xs-12">
+								<table class="table table-bordered table-hover table-condensed table-striped text-center" id="j-table-2">
+									<thead>
+										<tr>
+											<th>电影名称</th>
+	                                        <th>导演</th>
+	                                        <th>评分</th>
+	                                        <th>操作</th>
+	                                    </tr>
+									</thead>
+									<tbody id="filmList"> </tbody>
+								</table>
+								  <section class="page pull-right">
+									<ul class="pagination" id="filmPage"></ul>
+		                    	  </section>
+	                           </div>
+	                       </div>
+	                   </div>
+	               </div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary j-confirm-btn" id="film-movies-add">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+        
+        
+<script th:src="@{/js/movies/movies-list.js}"></script>
+<script th:src="@{/js/plug-in/my-opt/js/opt.js}"></script>
+
+<script id="moviesTempl" type="text/x-jquery-tmpl">
+{{each(i,item) list}}
+	<tr>
+      	<td>{{= item.name}}</td>
+		<td>{{= item.address}}</td>
+   	    <td>{{= item.address}}</td>
+		<td>
+			<button type="button" moviesId="{{= item.id}}" class="btn btn-success btn-xs j-jur j-movies-edit">修改</button>
+			<button type="button" moviesId="{{= item.id}}" class="btn btn-success btn-xs j-jur j-movies-del">删除</button>
+			<button type="button" moviesId="{{= item.id}}" class="btn btn-success btn-xs j-jur j-movies-film">电影信息</button>
+		</td>
+    </tr>
+{{/each}}
+</script>
+
+
+<script id="filmTempl" type="text/x-jquery-tmpl">
+{{each(i, item) list}}
+	<tr class="j-che-2" film-id="{{= item.id}}">
+         <td>{{= item.name}}</td>
+ 		 <td>{{= item.director}}</td>
+         <td>{{= item.score}}</td>
+         <td>
+             <button type="button" class="btn btn-info btn-xs j-btn-2" id="{{= item.id}}">可选</button>
+         </td>
+     </tr>
+{{/each}}
+</script>
+ 

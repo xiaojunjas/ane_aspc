@@ -12,8 +12,8 @@ import com.ane56.domain.RolePermission;
 
 public interface RolePermissionService {
 
-	@POST("/v1/rolePermissions")
-	public Long saveRolePermission(@Body RolePermission rolePermission);
+	/*@POST("/v1/rolePermissions")
+	public Long saveRolePermission(@Body RolePermission rolePermission);*/
 	
 	@POST("/v1/rolePermissions/batch")
 	public Long saveRolePermissionBatch(@Body List<RolePermission> list);

@@ -11,10 +11,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.ane56.domain.Permission;
 import com.ane56.domain.User;
+import com.ane56.service.PermissionService;
 import com.ane56.service.UserService;
 import com.google.common.collect.Lists;
 
 public class CustomUserDetailsService implements UserDetailsService{	
+	
+	@Autowired
+	private PermissionService permissionService;
 	
 	@Autowired
 	private UserService userService;
@@ -27,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 		}
 		List<GrantedAuthority> authorities = Lists.newArrayList();
 		if(!user.getAccount().equalsIgnoreCase("admin")){
-			List<Permission> permissions = userService.findPermissions(user.getId(),"1.");
+			List<Permission> permissions = permissionService.findPermissions(user.getId(),"1.");
 			Collections.reverse(permissions);
 			authorities.addAll(permissions);
 		}

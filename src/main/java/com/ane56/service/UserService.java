@@ -6,11 +6,9 @@ import java.util.List;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
-import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Query;
 
-import com.ane56.domain.Permission;
 import com.ane56.domain.User;
 
 public interface UserService {
@@ -32,14 +30,5 @@ public interface UserService {
 	
 	@PUT("/v1/user/userId")
 	public Integer editUserByUserId(@Body User user);
-	
-	@GET("/v1/user/login")
-	public Integer loginUser(@Query("name")String name,@Query("password")String password);
-	
-	@POST("/v1/user/create")
-	public Integer createUser(@Query("name")String name,@Query("password")String password);
-	
-	@GET("/v1/permissions/user")
-	public List<Permission> findPermissions(@Query("userId") Long userId, @Query("path") String path);
 	
 }

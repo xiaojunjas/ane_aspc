@@ -1,0 +1,87 @@
+<div class="content-wrapper">
+	<section class="content-header">
+		<h1>添加电影信息</h1>
+		<ol class="breadcrumb">
+			<li><a href="/panel"><i class="fa fa-dashboard"></i>首页</a></li>
+			<li><a href="">影院信息</a></li>
+			<li><a href="">添加影院</a></li>
+		</ol>
+	</section>
+	<section class="content">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box">
+					<div class="box box-info">
+						<div class="box-header with-border">
+							<h3 class="box-title">填写影院校信息</h3>
+						</div>
+						<form class="form-horizontal" id="organize">
+							<div class="box-body col-xs-12">
+								<div class="col-xs-6">
+									<div class="form-group">
+										<label for="input-name" class="col-sm-3 control-label">
+											<span class="my-red">*</span>名称
+										</label>
+										<div class="col-sm-9" form-prompt="false" form-prompt-text="名称不能为空且不能超过20个字符">
+											<input maxlength="20" type="text" class="form-control" id="input-name" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="input-province" class="col-sm-3 control-label">
+											<span class="my-red">*</span>导演
+										</label>
+										<div class="col-sm-9" form-prompt="false" form-prompt-text="省/市不能为空">
+											<input maxlength="20" type="text" class="form-control" id="input-director" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="input-area" class="col-sm-3 control-label">
+											<span class="my-red">*</span>次要
+										</label>
+										<div class="col-sm-9" form-prompt="false" form-prompt-text="区/街道不能为空">
+											<input maxlength="20" type="text" class="form-control" id="input-name" />
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<div class="form-group">
+										<label for="input-school-system" class="col-sm-3 control-label">
+											<span class="my-red">*</span>主演
+										</label>
+										<div class="col-sm-9">
+											<input maxlength="20" type="text" class="form-control" id="input-toStar" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="input-city" class="col-sm-3 control-label">
+											<span class="my-red">*</span>上映时间
+										</label>
+										<div class="col-sm-9" form-prompt="false" form-prompt-text="市/区不能为空">
+											<input maxlength="20" type="text" class="form-control" id="input-releaseTime" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="input-code" class="col-sm-3 control-label">
+											<span class="my-red">*</span>次要
+										</label>
+										<div class="col-sm-9" form-prompt="false" form-prompt-text="字母、数字加下划线 ，且不能超过20个字符">
+											<input maxlength="20" type="text" class="form-control" id="input-name" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="box-footer">
+								<button type="button" class="btn btn-default j-btn-cancel">取消</button>
+								<button type="button" class="btn btn-info pull-right j-submit">保存</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+<script th:src="@{/js/film/film-add.js}"></script>
+
+ 
